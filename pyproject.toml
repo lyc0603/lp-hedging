@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 find = {}
 
 [project]
-name = "environ"
+name = "dex_sim"
 version = "0.0.1" 
 readme = "README.md"
 requires-python = ">=3.10"
@@ -18,10 +18,19 @@ classifiers = [
 dependencies = [
     "numpy",
     "pandas",
-    'scipy',
+    "scipy",
     "requests",
     "matplotlib",
     "seaborn",
+    "codecov",
+    "tqdm",
+    "python-dotenv",
+    "plotnine",
+    "pandas-ta",
+    "nbconvert",
+    "notebook",
+    "pathlib",
+    "pyarrow",
 ]
 
 [project.optional-dependencies]
