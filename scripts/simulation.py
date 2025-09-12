@@ -89,7 +89,7 @@ def simulate(fee: float, k: float, dt: float) -> None:
         color="blue",
         linewidth=1.5,
         linestyle="-",
-        alpha=0.6,
+        alpha=0.8,
     )
     plt.plot(
         lp1_tracker.to_dataframe()[0].set_index("timestep")[["V"]],
@@ -97,7 +97,7 @@ def simulate(fee: float, k: float, dt: float) -> None:
         color="red",
         linewidth=1.5,
         linestyle="--",
-        alpha=0.6,
+        alpha=0.8,
     )
     plt.plot(
         BnH,
@@ -105,7 +105,7 @@ def simulate(fee: float, k: float, dt: float) -> None:
         color="orange",
         linewidth=1.5,
         linestyle=":",
-        alpha=0.6,
+        alpha=0.8,
     )
     plt.legend(
         frameon=False,
