@@ -12,9 +12,10 @@ from dex_sim.constants import FIGURE_PATH
 SEED = 6
 FONT_SIZE = 14
 
+T = 30 * 24  # total time in hours
 dt_list = [24, 1.0, 1.0 / 60]
 min_dt = min(dt_list)
-sim = PriceSimulator(initial_price=1000, mu=0.0, sigma=0.05, T=30 * 24, seed=SEED)
+sim = PriceSimulator(initial_price=1000, mu=0.0, sigma=0.05, T=T, seed=SEED)
 cex_prices = sim.simulate(dt=min_dt)
 
 
@@ -57,12 +58,15 @@ def simulate(fee: float, k: float, dt: float) -> None:
     lp1_tracker = LPV2AgentTracker(unhedged_liquidity_provider)
     lp2_tracker = LPV2AgentTracker(hedged_liquidity_provider)
 
-    BnH = []
+    BnH = {
+        "timestep": [],
+        "position": [],
+    }
     m = int(round(dt / min_dt))
 
     # for timestep, external_price in enumerate(cex_prices):
     for timestep in range(steps + 1):
-        timestep = timestep / min_dt
+        pct_step = timestep / steps * T
         external_price = cex_prices[timestep]
         unhedged_liquidity_provider.act(pool, external_price)
         # Hedged LP action at coarser dt
@@ -70,22 +74,24 @@ def simulate(fee: float, k: float, dt: float) -> None:
             hedged_liquidity_provider.act(pool, dt=dt, external_price=external_price)
         noise_trader.act(pool, dt=min_dt)
         arbitrager.act(pool, external_price)
-        BnH.append(1 * external_price + 1000)
+        BnH["timestep"].append(pct_step)
+        BnH["position"].append(1 * external_price + 1000)
         # trackers
-        pool_tracker.update(pool, timestep)
-        lp1_tracker.update(unhedged_liquidity_provider, pool, timestep)
-        lp2_tracker.update(hedged_liquidity_provider, pool, timestep)
+        pool_tracker.update(pool, pct_step)
+        lp1_tracker.update(unhedged_liquidity_provider, pool, pct_step)
+        lp2_tracker.update(hedged_liquidity_provider, pool, pct_step)
 
+    BnH = pd.DataFrame(BnH).set_index("timestep")["position"]
     plt.figure(figsize=(3.5, 3))
     plt.plot(
-        lp2_tracker.to_dataframe()[0][["Pi"]],
+        lp2_tracker.to_dataframe()[0].set_index("timestep")[["Pi"]],
         label="Hedged LP",
         color="blue",
         linewidth=1.5,
         alpha=0.8,
     )
     plt.plot(
-        lp1_tracker.to_dataframe()[0][["V"]],
+        lp1_tracker.to_dataframe()[0].set_index("timestep")[["V"]],
         label="Unhedged LP",
         color="red",
         linewidth=1.5,
@@ -99,7 +105,7 @@ def simulate(fee: float, k: float, dt: float) -> None:
         fontsize=FONT_SIZE,
         prop={"weight": "bold"},
     )
-    plt.xlabel("Step, $\mathbf{\delta t}$", fontsize=FONT_SIZE - 3, fontweight="bold")
+    plt.xlabel("Hour, $\mathbf{t}$", fontsize=FONT_SIZE - 3, fontweight="bold")
     plt.ylabel("Position (USD)", fontsize=FONT_SIZE - 3, fontweight="bold")
     plt.xticks(fontsize=FONT_SIZE - 4, fontweight="bold")
     plt.yticks(fontsize=FONT_SIZE - 4, fontweight="bold")
