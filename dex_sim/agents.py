@@ -50,14 +50,15 @@ class NoiseTraderV2(Agent):
         self.gaussian_mean = gaussian_mean
         self.gaussian_std = gaussian_std
 
-    def act(self, pool: PoolV2):
+    def act(self, pool: PoolV2, dt: float = None) -> None:
         """Perform actions in the pool."""
-        n_traders = self.rng.poisson(self.poission_lambda)
+        n_traders = self.rng.poisson(self.poission_lambda * dt)
         logger.debug("%s generating %d trades", self.name, n_traders)
         for _ in range(n_traders):
-            amt = self.rng.normal(self.gaussian_mean, self.gaussian_std)
+            amt = self.rng.normal(
+                self.gaussian_mean * dt, self.gaussian_std * np.sqrt(dt)
+            )
             logger.debug("%s executing trade with amount: %f", self.name, amt)
-            print(f"Trade amount: {amt}")
             # Execute the trade in the pool
             if amt > 0:
                 pool.swap(amount_in=amt, token0_for_token1=True)
@@ -76,6 +77,7 @@ class StaticLPV2(Agent):
         self.amount1 = amount1
         self.lp_position = None
         self.lp_liquidity = 0.0
+        self.V = 0.0
 
         # tracking
         self.history = []
@@ -99,14 +101,13 @@ class StaticLPV2(Agent):
                 minted,
             )
         s = lp_share_fraction(pool, self.lp_liquidity)
-        V = lp_mark_to_market_value(pool, s, external_price)
+        self.V = lp_mark_to_market_value(pool, s, external_price)
         self.history.append(
             {
                 "amount0": self.amount0,
                 "amount1": self.amount1,
                 "lp_liquidity": self.lp_liquidity,
-                "V": V,
-                "wealth": V,
+                "V": self.V,
             }
         )
 
@@ -148,6 +149,7 @@ class HedgedLPV2(Agent):
         self.amount0: float = amount0
         self.amount1: float = amount1
         self.cash_B: float = 0.0
+        self.Pi: float = 0.0  # total hedged wealth
 
         # LP
         self.lp_position = None
@@ -218,7 +220,7 @@ class HedgedLPV2(Agent):
         H = self.delta * S + self.cash_B  # self.delta is negative
         # total hedged wealth = LP + hedge
         wealth = V + H
-        Pi = wealth  # report Π as total hedged wealth
+        self.Pi = wealth  # report Π as total hedged wealth
 
         self.history.append(
             {
@@ -227,7 +229,7 @@ class HedgedLPV2(Agent):
                 "delta": self.delta,
                 "B": self.cash_B,
                 "H": H,
-                "Pi": Pi,
+                "Pi": self.Pi,
                 "tc": tc,
                 "s": s,
                 "wealth": V + H,
@@ -247,7 +249,7 @@ class HedgedLPV2(Agent):
             tc,
             self.cash_B,
             H,
-            Pi,
+            self.Pi,
         )
 
     def close(self, pool: PoolV2, fraction: float = 1.0) -> tuple[float, float]:
