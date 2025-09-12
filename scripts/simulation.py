@@ -88,16 +88,25 @@ def simulate(fee: float, k: float, dt: float) -> None:
         label="Hedged LP",
         color="blue",
         linewidth=1.5,
-        alpha=0.8,
+        linestyle="-",
+        alpha=0.6,
     )
     plt.plot(
         lp1_tracker.to_dataframe()[0].set_index("timestep")[["V"]],
         label="Unhedged LP",
         color="red",
         linewidth=1.5,
-        alpha=0.8,
+        linestyle="--",
+        alpha=0.6,
     )
-    plt.plot(BnH, label="Buy and Hold", color="orange", linewidth=1.5, alpha=0.8)
+    plt.plot(
+        BnH,
+        label="Buy and Hold",
+        color="orange",
+        linewidth=1.5,
+        linestyle=":",
+        alpha=0.6,
+    )
     plt.legend(
         frameon=False,
         bbox_to_anchor=(1.05, 1.05),
