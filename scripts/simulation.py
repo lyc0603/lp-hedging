@@ -78,7 +78,7 @@ plt.legend(
     prop={"weight": "bold"},
 )
 plt.xlabel(
-    "Step, $\\boldsymbol{\delta t}$",
+    r"Number of Time Intervals, $\boldsymbol{N = \frac{T}{\delta t}}$",
     fontsize=FONT_SIZE - 3,
     fontweight="bold",
 )
@@ -137,7 +137,7 @@ plt.legend(
     prop={"weight": "bold"},
 )
 plt.xlabel(
-    "Step, $\\boldsymbol{\delta t}$",
+    r"Number of Time Intervals, $\boldsymbol{N = \frac{T}{\delta t}}$",
     fontsize=FONT_SIZE - 3,
     fontweight="bold",
 )
@@ -195,7 +195,7 @@ plt.legend(
     prop={"weight": "bold"},
 )
 plt.xlabel(
-    "Step, $\\boldsymbol{\delta t}$",
+    r"Number of Time Intervals, $\boldsymbol{N = \frac{T}{\delta t}}$",
     fontsize=FONT_SIZE - 3,
     fontweight="bold",
 )
