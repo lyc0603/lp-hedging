@@ -81,6 +81,7 @@ plt.xlabel(
     r"Number of Time Intervals, $\boldsymbol{N = \frac{T}{\delta t}}$",
     fontsize=FONT_SIZE - 3,
     fontweight="bold",
+    x=0.3,
 )
 plt.ylabel(
     r"$\mathbf{\mathbb{E}[\Pi_{t + 1} - \Pi_{t}]}$, USD",
@@ -140,6 +141,7 @@ plt.xlabel(
     r"Number of Time Intervals, $\boldsymbol{N = \frac{T}{\delta t}}$",
     fontsize=FONT_SIZE - 3,
     fontweight="bold",
+    x=0.3,
 )
 plt.ylabel(
     r"$\mathbf{\mathbb{E}[\Pi_{t + 1} - \Pi_{t}]}$, USD",
@@ -198,6 +200,7 @@ plt.xlabel(
     r"Number of Time Intervals, $\boldsymbol{N = \frac{T}{\delta t}}$",
     fontsize=FONT_SIZE - 3,
     fontweight="bold",
+    x=0.3,
 )
 plt.ylabel(
     r"$\mathbf{\mathbb{E}[\Pi_{t + 1} - \Pi_{t}]}$, USD",
