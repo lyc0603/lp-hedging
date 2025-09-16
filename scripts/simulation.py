@@ -222,11 +222,11 @@ plt.show()
 
 # Plot sensitivity of Var[Π_T - Π_0] to N
 plt.figure(figsize=(3.5, 3))
-ks = [0.05, 0.025, 0.001]
+ks = [0.01, 0.005, 0.001]
 
 for k, color in zip(ks, COLORS):
     rows = []
-    for N in np.linspace(1, 30 * 24, 100)[1:]:
+    for N in np.linspace(1, 30 * 24 * 60, 100)[1:]:
         dt = T / N
         rows.append(
             {
@@ -294,7 +294,7 @@ V0s = [2000.0, 1000.0, 500.0]
 
 for V0, color in zip(V0s, COLORS):
     rows = []
-    for N in np.linspace(1, 30 * 24, 100)[1:]:
+    for N in np.linspace(1, 30 * 24 * 60, 100)[1:]:
         dt = T / N
         rows.append(
             {
@@ -362,7 +362,7 @@ sigmas = [0.03, 0.05, 0.08]
 
 for sigma, color in zip(sigmas, COLORS):
     rows = []
-    for N in np.linspace(1, 30 * 24, 100)[1:]:
+    for N in np.linspace(1, 30 * 24 * 60, 100)[1:]:
         dt = T / N
         rows.append(
             {
