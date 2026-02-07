@@ -137,7 +137,7 @@ if __name__ == "__main__":
     p = Params()
     results = simulate_paths(p)
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(6, 5))
 
     SIM_COLOR = "#6BAED6"
     THEORY_COLOR = "#D62728"
@@ -162,7 +162,7 @@ if __name__ == "__main__":
         label="Theory"
     )
 
-    ax.set_xlabel(r"Hedge Position PnL")
+    ax.set_xlabel(r"Hedged Position PnL")
     ax.grid(alpha=0.4)
     ax.legend(frameon=False, loc="upper left")
 
@@ -214,7 +214,7 @@ if __name__ == "__main__":
     axins_mae.grid(alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(FIGURE_PATH / "hedging_wo_cost.pdf", dpi=300)
+    plt.savefig(FIGURE_PATH / "sim_wo_cost.pdf", dpi=300)
     plt.show()
 
 
