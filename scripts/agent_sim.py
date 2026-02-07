@@ -15,7 +15,7 @@ FONT_SIZE = 14
 T = 30 * 24  # total time in hours
 dt_list = [24, 1.0, 1.0 / 60]
 min_dt = min(dt_list)
-sim = PriceSimulator(initial_price=1000, mu=0.0, sigma=0.05, T=T, seed=SEED)
+sim = PriceSimulator(initial_price=50, mu=0.0, sigma=0.05, T=T, seed=SEED)
 cex_prices = sim.simulate(dt=min_dt)
 
 

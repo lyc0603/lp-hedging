@@ -1,10 +1,10 @@
-# [Project Name]
+# LP Hedging
 
 ## Setup
 
 ```
-git clone [HTTPS/SSH URL]
-cd [project-name]
+git clone https://github.com/lyc0603/lp-hedging.git
+cd lp-hedging
 ```
 
 ### Give execute permission to your script and then run `setup_repo.sh`
@@ -57,26 +57,4 @@ pip install toml
 
 ```bash
 pip install -e ".[dev]"
-```
-
-## Set up the environmental variables
-
-put your APIs in `.env`:
-
-```
-COINGLASS_SECRET="abc123"
-KAIKO_API_KEY="abc123"
-TALLY_API_KEY="xxx"
-SNAPSHOT_API_KEY="aaa"
-OPENAI_API_KEY="sk-xxx"
-```
-
-```
-export $(cat .env | xargs)
-```
-
-# fetch snapshot spaces data
-
-```
-python scripts/fetch_spaces.py
 ```

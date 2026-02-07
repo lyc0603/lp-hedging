@@ -19,18 +19,8 @@ dependencies = [
     "numpy",
     "pandas",
     "scipy",
-    "requests",
     "matplotlib",
     "seaborn",
-    "codecov",
-    "tqdm",
-    "python-dotenv",
-    "plotnine",
-    "pandas-ta",
-    "nbconvert",
-    "notebook",
-    "pathlib",
-    "pyarrow",
 ]
 
 [project.optional-dependencies]
