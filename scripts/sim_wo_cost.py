@@ -182,17 +182,18 @@ if __name__ == "__main__":
     axins.scatter(
         results["theory_pnl"],
         results["realized_pnl"],
-        s=5, alpha=0.35, color="#333333"
+        s=5, alpha=0.15, color="#333333"
     )
 
     mn = min(results["theory_pnl"].min(), results["realized_pnl"].min())
     mx = max(results["theory_pnl"].max(), results["realized_pnl"].max())
-    axins.plot([mn, mx], [mn, mx], color=THEORY_COLOR, linewidth=1)
+    axins.plot([mn, mx], [mn, mx], color=THEORY_COLOR, linewidth=1, label="y=x")
 
     axins.set_xlabel("Theory", fontsize=9)
     axins.set_ylabel("Simulation", fontsize=9)
     axins.tick_params(labelsize=8)
     axins.grid(alpha=0.3)
+    axins.legend(frameon=False, loc="upper left", fontsize=10)
 
     # MAE inset (bottom)
     axins_mae = inset_axes(
